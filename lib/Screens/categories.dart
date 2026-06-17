@@ -21,7 +21,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(microseconds: 1000),
+      duration: const Duration(milliseconds: 300),
     );
 
     _animationController.forward();
@@ -45,8 +45,14 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController,
-      builder: (context, child) => Padding(
-        padding: EdgeInsets.only(top: 100 - _animationController.value * 100),
+      builder: (context, child) => SlideTransition(
+        position: Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0))
+            .animate(
+              CurvedAnimation(
+                parent: _animationController,
+                curve: Curves.easeInOut,
+              ),
+            ),
         child: child,
       ),
       child: GridView(
